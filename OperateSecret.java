@@ -60,8 +60,4 @@ public class OperateSecret extends Thread {
 
         return position == 5;
     }
-
-    public void runGame() {
-        throw new UnsupportedOperationException("Unimplemented method 'runGame'");
-    }
 }

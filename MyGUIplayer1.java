@@ -12,7 +12,7 @@ public class MyGUIplayer1 implements ActionListener {
     private JLabel numberLabel;
     private JLabel ipLabel;
     private JLabel portLabel;
-    private JLabel GuessNumberLabel;
+    private JLabel historyLabel;
     private JTextField nametextField;
     private JTextField iptextField;
     private JTextField porttextField;
@@ -21,8 +21,10 @@ public class MyGUIplayer1 implements ActionListener {
     private gameApp gameApp = new gameApp();
     private OperateSecret OperateSecret;
     
+    
 
     public MyGUIplayer1() {
+        //ตัวแปรทั้งหมดที่ใช้
         frame = new JFrame("Guess the Number Game");
         frame.setSize(600, 400);
 
@@ -37,7 +39,6 @@ public class MyGUIplayer1 implements ActionListener {
         numberLabel = new JLabel("");
 
         
-
         JPanel panel = new JPanel();
         panel.add(nameLabel);
         panel.add(nametextField);
@@ -64,13 +65,15 @@ public class MyGUIplayer1 implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        // หลังจากการกด submit หลังจากกรอกข้อมูลในหน้าแรก
         if (e.getSource() == Submitbutton) {
             String name = nametextField.getText();
             String ip = getInput.getIP();
             String port = getInput.getPort();
+            //เด้ง pop up เพื่อรอให้อีกฝ่ายเข้ามาพร้อมกัน
             JOptionPane.showMessageDialog(null,"Hello, " + name + " wait for another player on" + " ip: " + ip + " port:" + port);
             }
-            
+            //ลบข้อมูลช่องที่ให้กรอกหลังจากที่กด OK button ที่ pop up ขึ้นมา
             JPanel panel = (JPanel) frame.getContentPane().getComponent(0);
             panel.remove(nametextField);
             panel.remove(iptextField);
@@ -79,6 +82,7 @@ public class MyGUIplayer1 implements ActionListener {
             panel.revalidate();
             panel.repaint();
             
+            //แสดงชื่อที่ได้จากการกรอก เอาไว้อยู่ด้านล่างของจอ
             String name = nametextField.getText();
             String ip = getInput.getIP();
             String port = getInput.getPort();
@@ -87,7 +91,6 @@ public class MyGUIplayer1 implements ActionListener {
             ipLabel.setText("ip: " + ip);
             portLabel.setText("Port: " + port);
             
-            // Adding updated labels to the south panel
             JPanel southPanel = (JPanel) frame.getContentPane().getComponent(1);
             southPanel.add(nameLabel);
             southPanel.add(ipLabel);
@@ -95,8 +98,10 @@ public class MyGUIplayer1 implements ActionListener {
             southPanel.revalidate();
             southPanel.repaint();
             
+            //หลังจากนั้นจะทำการรัน gameApp.runGame(); 
             gameApp.runGame(); 
 
+            //แอคชั่นหลังจากการกดปุ่ม Guessbutton
             if (e.getSource() == Guessbutton) {
                 
             }
@@ -113,6 +118,7 @@ public class MyGUIplayer1 implements ActionListener {
     }
     
 
+    //code ที่เธอเขียน
     public static void main(String[] args) {
         new MyGUIplayer1();
     }
@@ -201,6 +207,9 @@ public class MyGUIplayer1 implements ActionListener {
             JLabel GuessNumberLabel = new JLabel("");
             JTextField GuessNumbertextField = new JTextField(5);
             boolean firstGuess = true;
+
+            //ส่วนนี้มีการแทรกคำสั่งที่เป็น GUI เพื่อทำการแสดงผลให้มีการกรอกพวกเลขเข้ามา แต่ยังดึงตัวแปรที่ประกาศใน class ออกมาไม่ได้
+
             while (times <= 5) {
                 if (firstGuess) { // ถ้าเป็นครั้งแรก
                     JPanel panel = (JPanel) frame.getContentPane().getComponent(0);
@@ -215,12 +224,13 @@ public class MyGUIplayer1 implements ActionListener {
                 // userTyping = sc.nextLine();
                 userTyping  =  GuessNumbertextField.getText();
                 System.out.println(userTyping + "print");
+                
                 // while (checkInput(userTyping) != 5 || userTyping.length() > 5) {
-                //     JOptionPane.showMessageDialog(null,"your text input is wrong!");
-                //     //System.out.println("\nyour text input is wrong!");
-                //     //sc = new Scanner(System.in);
-                //     //System.out.print("enter your guess number #" + times + ": ");
-                //     //userTyping = sc.nextLine();
+                //      JOptionPane.showMessageDialog(null,"your text input is wrong!");
+                // //     //System.out.println("\nyour text input is wrong!");
+                // //     //sc = new Scanner(System.in);
+                // //     //System.out.print("enter your guess number #" + times + ": ");
+                // //     //userTyping = sc.nextLine();
                 // }
                 times += 1;
                 if (secret.checkResult(userTyping)) {
@@ -230,13 +240,18 @@ public class MyGUIplayer1 implements ActionListener {
                 }
                 lastGuess.add(userTyping);
                 lastDigitPosition.add(secret.position + ":" + secret.digit);
+
+                historyLabel = new JLabel("Guess History ");
+                JPanel panel = new JPanel();
+                panel.add(nameLabel);
+                panel.add(nametextField);
                 //System.out.println("Guess history: " + lastGuess);
                 //System.out.println("correction history (digit:position): " + lastDigitPosition);
             }
-            // if (secret.position != 5) {
-            //     JOptionPane.showMessageDialog(null,"you lose! The secret number is " + secret.secretString);
-            //     //System.out.println("you lose! The secret number is " + secret.secretString);
-            // }
+            if (secret.position != 5) {
+                JOptionPane.showMessageDialog(null,"you lose! The secret number is " + secret.secretString);
+                //System.out.println("you lose! The secret number is " + secret.secretString);
+            }
             return times;
     
         }
@@ -253,7 +268,6 @@ public class MyGUIplayer1 implements ActionListener {
         }
     }
     
-
     public class getInput {
         public String getIP() {
             return iptextField.getText();

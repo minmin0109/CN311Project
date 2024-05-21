@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
-
 public class gameApp {
     public void runGame() {
         OperateSecret secret = new OperateSecret();
