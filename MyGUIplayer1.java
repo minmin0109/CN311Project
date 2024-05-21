@@ -97,16 +97,19 @@ public class MyGUIplayer1 implements ActionListener {
             
             gameApp.runGame(); 
 
+            if (e.getSource() == Guessbutton) {
+                
+            }
 
 
             
-        if (e.getSource() == Guessbutton) {
-            getInput guessinput = new getInput();
-            int[] guessArray = guessinput.getNumberGuess();
-            for (int number : guessArray) {
-                System.out.println("guessinput: " + number + " ");
-            }
-        }
+        // if (e.getSource() == Guessbutton) {
+        //     getInput guessinput = new getInput();
+        //     int[] guessArray = guessinput.getNumberGuess();
+        //     for (int number : guessArray) {
+        //         System.out.println("guessinput: " + number + " ");
+        //     }
+        // }
     }
     
 
